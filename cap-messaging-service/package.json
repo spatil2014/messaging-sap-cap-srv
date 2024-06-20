@@ -1,0 +1,54 @@
+{
+  "name": "cap-messaging-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "cds-serve",
+    "watch-messages": "cds watch --open messages/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy cap-messaging-service --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-gallantmessagingconfig": "cds watch --open gallantmessagingconfig/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-gallantmessagingcontact": "cds watch --open gallantmessagingcontact/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-configmessageingsrv": "cds watch --open configmessageingsrv/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-messagingconfigdata": "cds watch --open messagingconfigdata/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-contactsmaintenance": "cds watch --open contactsmaintenance/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind": "basic",
+        "users": {
+          "*": true
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/core": "^1.54.2",
+    "@sap/cds": "^7.9.2",
+    "@sap/xssec": "^4",
+    "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
+    "express-basic-auth": "^1.2.1",
+    "nodemailer": "^6.9.13"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7",
+    "@sap/ux-specification": "UI5-1.124",
+    "rimraf": "^5.0.5"
+  },
+  "sapux": [
+    "app/messages",
+    "app/gallantmessagingconfig",
+    "app/gallantmessagingcontact",
+    "app/configmessageingsrv",
+    "app/messagingconfigdata",
+    "app/contactsmaintenance"
+  ]
+}

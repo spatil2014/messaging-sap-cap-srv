@@ -1,0 +1,19 @@
+COLUMN TABLE MessagingService_messages_drafts (
+  ID NVARCHAR(36) NOT NULL,
+  content NVARCHAR(5000) NULL,
+  subject NVARCHAR(5000) NULL,
+  templateID BIGINT NULL,
+  attachment VARBINARY(5000) NULL,
+  document_no NVARCHAR(5000) NULL,
+  emails NCLOB NULL,
+  channel NVARCHAR(5000) NULL,
+  isSignRequired BOOLEAN NULL,
+  placeholders NCLOB NULL,
+  IsActiveEntity BOOLEAN,
+  HasActiveEntity BOOLEAN,
+  HasDraftEntity BOOLEAN,
+  DraftAdministrativeData_DraftUUID NVARCHAR(36) NOT NULL,
+  PRIMARY KEY(ID)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN MessagingService_DraftAdministrativeData AS DraftAdministrativeData ON (DraftAdministrativeData.DraftUUID = DraftAdministrativeData_DraftUUID)
+)

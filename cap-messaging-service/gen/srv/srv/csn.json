@@ -1,0 +1,660 @@
+{
+  "namespace": "cap.messaging.api",
+  "definitions": {
+    "cap.messaging.api.Messages": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "content": {
+          "type": "cds.String"
+        },
+        "subject": {
+          "type": "cds.String"
+        },
+        "templateID": {
+          "type": "cds.Integer64"
+        },
+        "attachment": {
+          "type": "cds.Binary"
+        },
+        "document_no": {
+          "type": "cds.String"
+        },
+        "emails": {
+          "items": {
+            "type": "cds.String"
+          }
+        },
+        "channel": {
+          "type": "cds.String"
+        },
+        "isSignRequired": {
+          "type": "cds.Boolean"
+        },
+        "placeholders": {
+          "items": {
+            "type": "cds.String"
+          }
+        }
+      }
+    },
+    "cap.messaging.api.Recipient": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "message": {
+          "type": "cds.Association",
+          "target": "cap.messaging.api.Messages",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "channel": {
+          "type": "cds.String"
+        },
+        "contact": {
+          "type": "cds.String"
+        },
+        "email": {
+          "type": "cds.String"
+        },
+        "status": {
+          "type": "cds.String"
+        }
+      }
+    },
+    "MessagingService": {
+      "@source": "srv/MessagingService.cds",
+      "kind": "service",
+      "@path": "/communication"
+    },
+    "MessagingService.messages": {
+      "kind": "entity",
+      "@odata.draft.enabled": true,
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": "content"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "subject"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "templateID"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "attachment"
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "RecipientsFacet",
+          "Label": "Recipients",
+          "Target": "@UI.FieldGroup#RecipientsFieldGroup"
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Messages"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "content": {
+          "type": "cds.String"
+        },
+        "subject": {
+          "type": "cds.String"
+        },
+        "templateID": {
+          "type": "cds.Integer64"
+        },
+        "attachment": {
+          "type": "cds.Binary"
+        },
+        "document_no": {
+          "type": "cds.String"
+        },
+        "emails": {
+          "items": {
+            "type": "cds.String"
+          }
+        },
+        "channel": {
+          "type": "cds.String"
+        },
+        "isSignRequired": {
+          "type": "cds.Boolean"
+        },
+        "placeholders": {
+          "items": {
+            "type": "cds.String"
+          }
+        }
+      }
+    },
+    "MessagingService.recipient": {
+      "kind": "entity",
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": "channel"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "contact"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "email"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "status"
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Recipient"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "message": {
+          "type": "cds.Association",
+          "target": "MessagingService.messages",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "channel": {
+          "type": "cds.String"
+        },
+        "contact": {
+          "type": "cds.String"
+        },
+        "email": {
+          "type": "cds.String"
+        },
+        "status": {
+          "type": "cds.String"
+        }
+      }
+    },
+    "MessagingService.sendWhatsAppMessage": {
+      "kind": "action",
+      "params": {
+        "recipient": {
+          "type": "cds.String"
+        },
+        "message": {
+          "type": "cds.String"
+        },
+        "attachment": {
+          "type": "cds.String"
+        }
+      },
+      "returns": {
+        "type": "cds.Boolean"
+      }
+    },
+    "MessagingService.sendSMS": {
+      "kind": "action",
+      "params": {
+        "recipient": {
+          "type": "cds.String"
+        },
+        "message": {
+          "type": "cds.String"
+        }
+      },
+      "returns": {
+        "type": "cds.Boolean"
+      }
+    },
+    "MessagingService.messagingAction": {
+      "kind": "action",
+      "params": {
+        "emails": {
+          "items": {
+            "type": "cds.String"
+          }
+        },
+        "subject": {
+          "type": "cds.String"
+        },
+        "content": {
+          "type": "cds.String"
+        },
+        "document_no": {
+          "type": "cds.String"
+        },
+        "attachment": {
+          "type": "cds.String"
+        },
+        "channel": {
+          "type": "cds.String"
+        },
+        "isSignRequired": {
+          "type": "cds.Boolean"
+        },
+        "placeholders": {
+          "items": {
+            "type": "cds.String"
+          }
+        }
+      },
+      "returns": {
+        "type": "cds.Boolean"
+      }
+    }
+  },
+  "extensions": [
+    {
+      "annotate": "MessagingService.ConfigData",
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@UI.HeaderInfo.Title.Value": "Master Data",
+      "@UI.HeaderInfo.TypeName": "Config Master Data",
+      "@UI.HeaderInfo.TypeNamePlural": "Config Master Data",
+      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
+      "@UI.HeaderInfo.Description.Value": "Config Master Data",
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSAPI",
+          "Value": {
+            "=": "SMSAPI"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSUSER",
+          "Value": {
+            "=": "SMSUSER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSPASSWD",
+          "Value": {
+            "=": "SMSPASSWD"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SENDER",
+          "Value": {
+            "=": "SENDER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMTPHOST",
+          "Value": {
+            "=": "SMTPHOST"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMTPPORT",
+          "Value": {
+            "=": "SMTPPORT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WHATSAPPAPI",
+          "Value": {
+            "=": "WHATSAPPAPI"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPUSER",
+          "Value": {
+            "=": "WTSPUSER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPPASSWD",
+          "Value": {
+            "=": "WTSPPASSWD"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPSENDER",
+          "Value": {
+            "=": "WTSPSENDER"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSAPI",
+          "Value": {
+            "=": "SMSAPI"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSUSER",
+          "Value": {
+            "=": "SMSUSER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSPASSWD",
+          "Value": {
+            "=": "SMSPASSWD"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SENDER",
+          "Value": {
+            "=": "SENDER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMTPHOST",
+          "Value": {
+            "=": "SMTPHOST"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMTPPORT",
+          "Value": {
+            "=": "SMTPPORT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WHATSAPPAPI",
+          "Value": {
+            "=": "WHATSAPPAPI"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPUSER",
+          "Value": {
+            "=": "WTSPUSER"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPPASSWD",
+          "Value": {
+            "=": "WTSPPASSWD"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "WTSPSENDER",
+          "Value": {
+            "=": "WTSPSENDER"
+          }
+        }
+      ]
+    },
+    {
+      "annotate": "MessagingService.ContactData",
+      "@Capabilities.InsertRestrictions.Insertable": true,
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "ContactNumber",
+          "Value": {
+            "=": "ContactNumber"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Email",
+          "Value": {
+            "=": "Email"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Country",
+          "Value": {
+            "=": "Country"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "EMAILSUBJECT",
+          "Value": {
+            "=": "EMAILSUBJECT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "EMAILBODY",
+          "Value": {
+            "=": "EMAILBODY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Template",
+          "Value": {
+            "=": "Template"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "ContactNumber",
+          "Value": {
+            "=": "ContactNumber"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Email",
+          "Value": {
+            "=": "Email"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Country",
+          "Value": {
+            "=": "Country"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "EMAILSUBJECT",
+          "Value": {
+            "=": "EMAILSUBJECT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "EMAILBODY",
+          "Value": {
+            "=": "EMAILBODY"
+          }
+        }
+      ]
+    },
+    {
+      "annotate": "MessagingService.Contacts",
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "Contact",
+          "Value": {
+            "=": "Contact"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Email",
+          "Value": {
+            "=": "Email"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Country",
+          "Value": {
+            "=": "Country"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSTemplate",
+          "Value": {
+            "=": "SMSTemplate"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "Contact",
+          "Value": {
+            "=": "Contact"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Email",
+          "Value": {
+            "=": "Email"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "Country",
+          "Value": {
+            "=": "Country"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "SMSTemplate",
+          "Value": {
+            "=": "SMSTemplate"
+          }
+        }
+      ],
+      "elements": {
+        "EmailTemplate": {
+          "@Common.ValueList.$Type": "Common.ValueListType",
+          "@Common.ValueList.CollectionPath": "EmailTemplates",
+          "@Common.ValueList.Parameters": [
+            {
+              "$Type": "Common.ValueListParameterInOut",
+              "LocalDataProperty": {
+                "=": "EmailTemplate_ID"
+              },
+              "ValueListProperty": "ID"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "Body"
+            },
+            {
+              "$Type": "Common.ValueListParameterDisplayOnly",
+              "ValueListProperty": "Subject"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "annotate": "MessagingService.messages.recipient",
+      "@UI.FieldGroup#RecipientsFieldGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#RecipientsFieldGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": "channel"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "contact"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "email"
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": "status"
+        }
+      ]
+    }
+  ],
+  "meta": {
+    "creator": "CDS Compiler v4.9.2",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

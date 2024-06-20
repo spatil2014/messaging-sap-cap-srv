@@ -1,0 +1,12 @@
+VIEW MessagingService_messages AS SELECT
+  Messages_0.ID,
+  Messages_0.content,
+  Messages_0.subject,
+  Messages_0.templateID,
+  Messages_0.attachment,
+  Messages_0.document_no,
+  Messages_0.emails,
+  Messages_0.channel,
+  Messages_0.isSignRequired,
+  Messages_0.placeholders
+FROM cap_messaging_api_Messages AS Messages_0

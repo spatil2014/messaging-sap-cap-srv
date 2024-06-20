@@ -1,0 +1,11 @@
+COLUMN TABLE cap_messaging_api_Recipient (
+  ID NVARCHAR(36) NOT NULL,
+  message_ID NVARCHAR(36),
+  channel NVARCHAR(5000),
+  contact NVARCHAR(5000),
+  email NVARCHAR(5000),
+  status NVARCHAR(5000),
+  PRIMARY KEY(ID)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN cap_messaging_api_Messages AS message ON (message.ID = message_ID)
+)
