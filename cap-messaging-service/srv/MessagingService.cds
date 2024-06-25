@@ -5,6 +5,9 @@ service MessagingService @(path: '/communication') {
 @odata.draft.enabled
 entity messages as projection on messaging.Messages;
 entity recipient as projection on messaging.Recipient;
+entity configuration as projection on messaging.Configuration;
+entity log as projection on messaging.Log;
+entity templates as projection on messaging.Templates;
 
   /**
    * Send a message via WhatsApp.
@@ -45,7 +48,7 @@ entity recipient as projection on messaging.Recipient;
   //   body : LargeString;
   //   document_no: String(50);
   //  }
-  action messagingAction(emails: array of String, subject: String, content: String, document_no: String, attachment: String, channel: String, isSignRequired: Boolean, placeholders: array of String) returns Boolean;
+  action messagingAction(recipients: array of String, subject: String, content: String, document_no: String, attachment: String, channel: String, isSignRequired: Boolean, placeholders: array of String) returns Boolean;
   
   // action sendEmail(body: body) returns Boolean;
   

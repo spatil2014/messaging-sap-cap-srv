@@ -1,4 +1,6 @@
 const axios = require('axios');
+const cds = require('@sap/cds');
+const configs = require("./FetchConfigs");
 
 function replacePlaceholders(template, values) {
   let i = 0;
@@ -7,6 +9,10 @@ function replacePlaceholders(template, values) {
 async function sendSMS(contactNos ) {
   const template = "{#var#}{#var#} bill no.{#var#}{#var#}{#var#} MT{#var#}{#var#} MT,{#var#}{#var#} MT, {#var#} {#var#} MT, {#var#}{#var#} MT,={#var#} MT {#var#} P.I.Truck- GALLANTT";
  let msg = replacePlaceholders(template, contactNos.placeholders);
+ let configData = await configs.fetchAllEntries('Configuration');
+ //configs.fetchEntryById('Configuration','SMS', 'GALL');
+ let templateDetails = await configs.fetchAllEntries('Templates');
+ //configs.fetchEntryById('Templates','Invoice Billing');
 
   let payload = {
     userid: "gallantt",
@@ -18,7 +24,7 @@ async function sendSMS(contactNos ) {
     sendMethod: "quick",
     sms: [
       {
-        mobile: contactNos.emails,
+        mobile: contactNos.recipients,
         msg: msg
       }
     ]

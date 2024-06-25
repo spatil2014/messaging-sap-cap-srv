@@ -1,4 +1,6 @@
 const axios = require('axios');
+const cds = require('@sap/cds');
+const configs = require("./FetchConfigs");
 
 function replacePlaceholders(template, values) {
   let i = 0;
@@ -7,6 +9,11 @@ function replacePlaceholders(template, values) {
 async function sendSMS(contactNos ) {
   const template = "{#var#}{#var#} bill no.{#var#}{#var#}{#var#} MT{#var#}{#var#} MT,{#var#}{#var#} MT, {#var#} {#var#} MT, {#var#}{#var#} MT,={#var#} MT {#var#} P.I.Truck- GALLANTT";
  let msg = replacePlaceholders(template, contactNos.placeholders);
+ let templateDetails = await configs.fetchEntryByDocumentType('Templates', 'Invoice');
+ //configs.fetchEntryById('Configuration','SMS', 'GALL');
+ let configDetails = await configs.fetchEntryByCommunicationType('Configuration', 'SMS', 'Gallant');
+ //configs.fetchEntryById('Templates','Invoice Billing');
+ const logTable = cds.entities['Log'];
 
   let payload = {
     userid: "gallantt",
@@ -18,7 +25,7 @@ async function sendSMS(contactNos ) {
     sendMethod: "quick",
     sms: [
       {
-        mobile: contactNos.emails,
+        mobile: contactNos.recipients,
         msg: msg
       }
     ]
@@ -30,8 +37,20 @@ async function sendSMS(contactNos ) {
         'Content-Type': 'application/json'
       }
     });
-    console.log('SMS sent successfully:', response.data);
+    await cds.run(INSERT.into(logTable).entries({
+      messageContent: msg,
+      sender: 'GMLGDM',
+      status: 'success',
+      statusText: `${response.data.reason}`
+    }));
+    console.log('SMS sent successfully:', response.data.reason);
   } catch (error) {
+    await cds.run(INSERT.into(logTable).entries({
+      messageContent: msg,
+      sender: 'GMLGDM',
+      status: 'failed',
+      statusText: `Error sending SMS: ${error.message}`
+    }));
     console.error('Error sending SMS:', error);
   }
 }

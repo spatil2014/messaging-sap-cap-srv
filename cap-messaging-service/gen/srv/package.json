@@ -23,7 +23,9 @@
       "auth": {
         "kind": "basic",
         "users": {
-          "*": true
+          "anil.kg@geschaftindia.com": {
+            "password": "Gallantt@4321"
+          }
         }
       }
     }

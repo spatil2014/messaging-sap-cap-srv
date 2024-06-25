@@ -48,23 +48,23 @@ module.exports = async function (req) {
     const data = req.data; // Access the 'body' parameter directly from the request
   
     // Extract necessary information from the body
-    const { emails, subject, content, document_no, cc, channel, isSignRequired, values } = data;
+    const { recipients, subject, content, document_no, cc, channel, isSignRequired, values } = data;
     var oDestination;
     // Simulate destination details
-         oDestination = {
-             destinationName: process.env.DESTINATION_NAME,
-             URL: process.env.DESTINATION_URL,
-             authentication: 'BasicAuthentication',
-             User: process.env.User,
-             Password: process.env.Password
-         };
+        //  oDestination = {
+        //      destinationName: process.env.DESTINATION_NAME,
+        //      URL: process.env.DESTINATION_URL,
+        //      authentication: 'BasicAuthentication',
+        //      User: process.env.User,
+        //      Password: process.env.Password
+        //  };
     if(channel === 'E') {
       try {
         // Get destination details
         xsenv.loadEnv();
-        //var destinationService = xsenv.getServices({destination:{name:"cap-messaging-service-destination-service"}});
-        //var accessToken = await getJWTToken(destinationService.destination, "/oauth/token?grant_type=client_credentials");
-        //oDestination = await getDestinationInfo(destinationService.destination.uri, accessToken, "my410378_basic_auth");
+        var destinationService = xsenv.getServices({destination:{name:"cap-messaging-service-destination-service"}});
+        var accessToken = await getJWTToken(destinationService.destination, "/oauth/token?grant_type=client_credentials");
+        oDestination = await getDestinationInfo(destinationService.destination.uri, accessToken, "my410378_basic_auth");
 
         console.log("dest"+JSON.stringify(oDestination));
 
@@ -133,7 +133,7 @@ module.exports = async function (req) {
             throw 'Noob Error - Error while Fetching JWT Token ! '
           }
         }
-        for (const email of emails) {
+        for (const email of recipients) {
           sendEmail.sendEmail(email, subject, content, document_no, filePath, cc);
         }
         fs.unlinkSync(filePath);

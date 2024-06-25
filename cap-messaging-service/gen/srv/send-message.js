@@ -4,7 +4,7 @@ const axios = require('axios');
 
 async function sendEmail() {
   try {
-  let emails = ['9742461956', '9845783133'];
+  let recipients = ['9742461956', '9717014222'];
     //[{ emailid: 'shankar.patil@mnemosysservices.com' },
    // { emailid: 'dummy@mail.com' }];
     
@@ -17,7 +17,7 @@ async function sendEmail() {
     
     let isSignRequired = true;
     const response = await axios.post('http://localhost:4004/communication/messagingAction', {
-    emails,
+      recipients,
     subject,
     content,
     document_no,
