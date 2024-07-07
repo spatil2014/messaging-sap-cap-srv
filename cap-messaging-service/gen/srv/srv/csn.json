@@ -3,7 +3,58 @@
   "definitions": {
     "cap.messaging.api.Messages": {
       "kind": "entity",
+      "includes": [
+        "managed"
+      ],
       "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
         "ID": {
           "key": true,
           "type": "cds.UUID"
@@ -85,6 +136,10 @@
     "cap.messaging.api.Configuration": {
       "kind": "entity",
       "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
         "apihost": {
           "type": "cds.String",
           "length": 200
@@ -145,6 +200,9 @@
           "@cds.on.update": {
             "=": "$now"
           },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
           "type": "cds.Timestamp"
         },
         "modifiedBy": {
@@ -154,8 +212,12 @@
           "@cds.on.update": {
             "=": "$user"
           },
-          "type": "cds.String",
-          "length": 50
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
         },
         "sender": {
           "type": "cds.String",
@@ -164,6 +226,14 @@
         "status": {
           "type": "cds.String",
           "length": 30
+        },
+        "messageContent": {
+          "type": "cds.String",
+          "length": 200
+        },
+        "statusText": {
+          "type": "cds.String",
+          "length": 50
         }
       }
     },
@@ -178,6 +248,7 @@
           "type": "cds.UUID"
         },
         "templateID": {
+          "key": true,
           "type": "cds.String",
           "length": 50
         },
@@ -202,7 +273,6 @@
     },
     "MessagingService.messages": {
       "kind": "entity",
-      "@odata.draft.enabled": true,
       "@UI.LineItem": [
         {
           "$Type": "UI.DataField",
@@ -237,6 +307,54 @@
         }
       },
       "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
         "ID": {
           "key": true,
           "type": "cds.UUID"
@@ -350,6 +468,10 @@
         }
       },
       "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
         "apihost": {
           "type": "cds.String",
           "length": 200
@@ -413,6 +535,9 @@
           "@cds.on.update": {
             "=": "$now"
           },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
           "type": "cds.Timestamp"
         },
         "modifiedBy": {
@@ -422,8 +547,12 @@
           "@cds.on.update": {
             "=": "$user"
           },
-          "type": "cds.String",
-          "length": 50
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
         },
         "sender": {
           "type": "cds.String",
@@ -432,6 +561,14 @@
         "status": {
           "type": "cds.String",
           "length": 30
+        },
+        "messageContent": {
+          "type": "cds.String",
+          "length": 200
+        },
+        "statusText": {
+          "type": "cds.String",
+          "length": 50
         }
       }
     },
@@ -450,6 +587,7 @@
           "type": "cds.UUID"
         },
         "templateID": {
+          "key": true,
           "type": "cds.String",
           "length": 50
         },
@@ -1247,357 +1385,6 @@
     }
   },
   "extensions": [
-    {
-      "annotate": "MessagingService.ConfigData",
-      "@Capabilities.InsertRestrictions.Insertable": true,
-      "@UI.HeaderInfo.Title.Value": "Master Data",
-      "@UI.HeaderInfo.TypeName": "Config Master Data",
-      "@UI.HeaderInfo.TypeNamePlural": "Config Master Data",
-      "@UI.HeaderInfo.Description.$Type": "UI.DataField",
-      "@UI.HeaderInfo.Description.Value": "Config Master Data",
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSAPI",
-          "Value": {
-            "=": "SMSAPI"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSUSER",
-          "Value": {
-            "=": "SMSUSER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSPASSWD",
-          "Value": {
-            "=": "SMSPASSWD"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SENDER",
-          "Value": {
-            "=": "SENDER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMTPHOST",
-          "Value": {
-            "=": "SMTPHOST"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMTPPORT",
-          "Value": {
-            "=": "SMTPPORT"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WHATSAPPAPI",
-          "Value": {
-            "=": "WHATSAPPAPI"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPUSER",
-          "Value": {
-            "=": "WTSPUSER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPPASSWD",
-          "Value": {
-            "=": "WTSPPASSWD"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPSENDER",
-          "Value": {
-            "=": "WTSPSENDER"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "General Information",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSAPI",
-          "Value": {
-            "=": "SMSAPI"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSUSER",
-          "Value": {
-            "=": "SMSUSER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSPASSWD",
-          "Value": {
-            "=": "SMSPASSWD"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SENDER",
-          "Value": {
-            "=": "SENDER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMTPHOST",
-          "Value": {
-            "=": "SMTPHOST"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMTPPORT",
-          "Value": {
-            "=": "SMTPPORT"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WHATSAPPAPI",
-          "Value": {
-            "=": "WHATSAPPAPI"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPUSER",
-          "Value": {
-            "=": "WTSPUSER"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPPASSWD",
-          "Value": {
-            "=": "WTSPPASSWD"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "WTSPSENDER",
-          "Value": {
-            "=": "WTSPSENDER"
-          }
-        }
-      ]
-    },
-    {
-      "annotate": "MessagingService.ContactData",
-      "@Capabilities.InsertRestrictions.Insertable": true,
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "ContactNumber",
-          "Value": {
-            "=": "ContactNumber"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Email",
-          "Value": {
-            "=": "Email"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Country",
-          "Value": {
-            "=": "Country"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "EMAILSUBJECT",
-          "Value": {
-            "=": "EMAILSUBJECT"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "EMAILBODY",
-          "Value": {
-            "=": "EMAILBODY"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Template",
-          "Value": {
-            "=": "Template"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "General Information",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "ContactNumber",
-          "Value": {
-            "=": "ContactNumber"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Email",
-          "Value": {
-            "=": "Email"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Country",
-          "Value": {
-            "=": "Country"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "EMAILSUBJECT",
-          "Value": {
-            "=": "EMAILSUBJECT"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "EMAILBODY",
-          "Value": {
-            "=": "EMAILBODY"
-          }
-        }
-      ]
-    },
-    {
-      "annotate": "MessagingService.Contacts",
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "Contact",
-          "Value": {
-            "=": "Contact"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Email",
-          "Value": {
-            "=": "Email"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Country",
-          "Value": {
-            "=": "Country"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSTemplate",
-          "Value": {
-            "=": "SMSTemplate"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "General Information",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Label": "Contact",
-          "Value": {
-            "=": "Contact"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Email",
-          "Value": {
-            "=": "Email"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "Country",
-          "Value": {
-            "=": "Country"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Label": "SMSTemplate",
-          "Value": {
-            "=": "SMSTemplate"
-          }
-        }
-      ],
-      "elements": {
-        "EmailTemplate": {
-          "@Common.ValueList.$Type": "Common.ValueListType",
-          "@Common.ValueList.CollectionPath": "EmailTemplates",
-          "@Common.ValueList.Parameters": [
-            {
-              "$Type": "Common.ValueListParameterInOut",
-              "LocalDataProperty": {
-                "=": "EmailTemplate_ID"
-              },
-              "ValueListProperty": "ID"
-            },
-            {
-              "$Type": "Common.ValueListParameterDisplayOnly",
-              "ValueListProperty": "Body"
-            },
-            {
-              "$Type": "Common.ValueListParameterDisplayOnly",
-              "ValueListProperty": "Subject"
-            }
-          ]
-        }
-      }
-    },
     {
       "annotate": "MessagingService.messages.recipient",
       "@UI.FieldGroup#RecipientsFieldGroup.$Type": "UI.FieldGroupType",

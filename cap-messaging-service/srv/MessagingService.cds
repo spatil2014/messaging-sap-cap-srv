@@ -2,7 +2,7 @@ using cap.messaging.api as messaging from '../db/schema';
 
 service MessagingService @(path: '/communication') {
 
-@odata.draft.enabled
+// @odata.draft.enabled
 entity messages as projection on messaging.Messages;
 entity recipient as projection on messaging.Recipient;
 entity configuration as projection on messaging.Configuration;

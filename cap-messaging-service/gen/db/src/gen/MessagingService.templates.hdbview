@@ -1,0 +1,7 @@
+VIEW MessagingService_templates AS SELECT
+  Templates_0.ID,
+  Templates_0.templateID,
+  Templates_0.documentType,
+  Templates_0.sender,
+  Templates_0.content
+FROM cap_messaging_api_Templates AS Templates_0

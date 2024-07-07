@@ -1,0 +1,11 @@
+COLUMN TABLE cap_messaging_api_Configuration (
+  ID NVARCHAR(36) NOT NULL,
+  apihost NVARCHAR(200),
+  port SMALLINT,
+  username NVARCHAR(50),
+  password NVARCHAR(30),
+  type NVARCHAR(30),
+  sender NVARCHAR(50),
+  client NVARCHAR(50),
+  PRIMARY KEY(ID)
+)

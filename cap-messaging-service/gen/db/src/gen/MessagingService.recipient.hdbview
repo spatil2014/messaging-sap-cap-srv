@@ -1,5 +1,7 @@
 VIEW MessagingService_recipient AS SELECT
   Recipient_0.ID,
+  Recipient_0.firstName,
+  Recipient_0.lastName,
   Recipient_0.message_ID,
   Recipient_0.channel,
   Recipient_0.contact,

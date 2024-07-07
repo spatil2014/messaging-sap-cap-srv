@@ -21,16 +21,6 @@ module.exports = async function (req) {
   
 
   console.log("recepiets");
-
-  var SMSData = {
-    username  : "SPSILG",
-    password  : "spsilg",
-    from      : "SPSILG",
-    pe_id     : "1701159948727832895",
-    template_id: "1707170297327298684",
-    to        : ["9742461956", "9742107750","9448155241", "9717014222"],
-    text      : "Item Catg. - {send sms} Heat No.-{NA} Caster - {NA} with Phos Phos - {NA} Carbon - {NA} Manganese - {BNA} Sulphur - {SDF} Chromium - {TEST} Copper - {TEST} Nickle - {TEST} Moly - {TEST} Time -{TEST} SPSILG"
-  }
   this.on('sendSMS', async (req) => {
     const { recipient, message } = req.data;
     const { data } = req;

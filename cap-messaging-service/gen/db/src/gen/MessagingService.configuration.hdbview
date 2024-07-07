@@ -1,0 +1,10 @@
+VIEW MessagingService_configuration AS SELECT
+  Configuration_0.ID,
+  Configuration_0.apihost,
+  Configuration_0.port,
+  Configuration_0.username,
+  Configuration_0.password,
+  Configuration_0.type,
+  Configuration_0.sender,
+  Configuration_0.client
+FROM cap_messaging_api_Configuration AS Configuration_0

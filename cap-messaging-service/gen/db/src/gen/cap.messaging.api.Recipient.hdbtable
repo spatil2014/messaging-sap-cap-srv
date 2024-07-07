@@ -1,5 +1,7 @@
 COLUMN TABLE cap_messaging_api_Recipient (
   ID NVARCHAR(36) NOT NULL,
+  firstName NVARCHAR(50),
+  lastName NVARCHAR(50),
   message_ID NVARCHAR(36),
   channel NVARCHAR(5000),
   contact NVARCHAR(5000),

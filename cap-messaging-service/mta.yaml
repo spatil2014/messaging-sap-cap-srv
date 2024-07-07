@@ -31,61 +31,9 @@ modules:
             - messages.zip
           name: messages
           target-path: resources/
-        - artifacts:
-            - gallantmessagingcontact.zip
-          name: gallantmessagingcontact
-          target-path: resources/
-        - artifacts:
-            - messagingconfigdata.zip
-          name: messagingconfigdata
-          target-path: resources/
-        - artifacts:
-            - contactsmaintenance.zip
-          name: contactsmaintenance
-          target-path: resources/
   - name: messages
     type: html5
     path: app/messages
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
-  - name: cap-messaging-service-db-deployer
-    type: hdb
-    path: gen/db
-    requires:
-      - name: cap-messaging-service-db
-    parameters:
-      buildpack: nodejs_buildpack
-  - name: gallantmessagingcontact
-    type: html5
-    path: app/gallantmessagingcontact
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
-  - name: messagingconfigdata
-    type: html5
-    path: app/messagingconfigdata
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
-  - name: contactsmaintenance
-    type: html5
-    path: app/contactsmaintenance
     build-parameters:
       build-result: dist
       builder: custom
