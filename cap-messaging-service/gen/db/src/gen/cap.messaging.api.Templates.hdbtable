@@ -1,8 +1,12 @@
 COLUMN TABLE cap_messaging_api_Templates (
-  ID NVARCHAR(36) NOT NULL,
-  templateID NVARCHAR(50) NOT NULL,
-  documentType NVARCHAR(50),
-  sender NVARCHAR(50),
+  createdAt TIMESTAMP,
+  createdBy NVARCHAR(255),
+  modifiedAt TIMESTAMP,
+  modifiedBy NVARCHAR(255),
+  vendor NVARCHAR(60) NOT NULL,
+  documentType NVARCHAR(20) NOT NULL,
+  msgType NVARCHAR(4) NOT NULL,
+  templateID NVARCHAR(50),
   content NVARCHAR(200),
-  PRIMARY KEY(ID, templateID)
+  PRIMARY KEY(vendor, documentType, msgType)
 )

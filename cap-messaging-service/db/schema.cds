@@ -1,5 +1,42 @@
 namespace cap.messaging.api;
 using { cuid, managed } from '@sap/cds/common';
+
+type t_vendor: String(60);
+type t_docType: String(20);
+type t_msgType: String(4); // SMS or EMAIL
+
+
+
+entity Configuration: managed {
+  key vendor: t_vendor @title : 'Vendor';
+  key msgType: t_msgType @title : 'Message Type';
+  apihost: String(200) @title : 'API Host';
+  port: Int16 @title : 'Port';
+  username: String(50) @title : 'User Name';
+  password: String(30) @title : 'Password';
+  sender: String(50) @title : 'Sender';
+  documentType: t_docType @title : 'Document Type';
+  active: Boolean default true @title : 'Active Flag';
+}
+
+
+entity Templates : managed {
+  key vendor: t_vendor @title : 'Vendor';
+  key documentType: t_docType @title : 'Document Type';
+  key msgType: t_msgType @title : 'Message Type';
+  templateID: String(50) @title : 'Template ID';
+  content: String(200) @title : 'Content';
+}
+
+entity Log : cuid, managed {
+  key vendor: t_vendor @title : 'Vendor';
+  key msgType: t_msgType @title : 'Message Type';
+  key documentType: t_docType @title : 'Document Type';
+  key documentRef: String(100) @title : 'Document Reference';
+  status: String(30) @title : 'Status';
+  messageContent: LargeString @title : 'Message Content';
+}
+
 entity Messages: managed {
   key ID : UUID;
   content : String;
@@ -25,30 +62,6 @@ entity Recipient {
   status: String; // Sent, Failed, Pending, etc.
 }
 
-entity Configuration {
-  key ID: UUID;
-  apihost: String(200);
-  port: Int16;
-  username: String(50);
-  password: String(30);
-  type: String(30);
-  sender: String(50);
-  client: String(50);
-}
 
-entity Log : cuid, managed {
-  key ID: UUID;
-  sender: String(50);
-  status: String(30);
-  createdAt  : Timestamp @cds.on.insert : $now;
-  createdBy  : String(50) @cds.on.insert : $user;
-  messageContent: String(200);
-  statusText: String(50);
-}
 
-entity Templates : cuid {
-  key templateID: String(50);
-  documentType: String(50);
-  sender: String(50);
-  content: String(200);
-}
+

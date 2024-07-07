@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="self" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="log" EntityType="self.log"/>
+      </EntityContainer>
+      <EntityType Name="log">
+        <Key>
+          <PropertyRef Name="ID"/>
+          <PropertyRef Name="vendor"/>
+          <PropertyRef Name="msgType"/>
+          <PropertyRef Name="documentType"/>
+          <PropertyRef Name="documentRef"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="vendor" Type="Edm.String" MaxLength="60" Nullable="false"/>
+        <Property Name="msgType" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="documentType" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="documentRef" Type="Edm.String" MaxLength="100" Nullable="false"/>
+        <Property Name="status" Type="Edm.String" MaxLength="30"/>
+        <Property Name="messageContent" Type="Edm.String"/>
+      </EntityType>
+      <Annotations Target="self.log/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="self.log/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="self.log/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="self.log/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="self.log/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="self.log/vendor">
+        <Annotation Term="Common.Label" String="Vendor"/>
+      </Annotations>
+      <Annotations Target="self.log/msgType">
+        <Annotation Term="Common.Label" String="Message Type"/>
+      </Annotations>
+      <Annotations Target="self.log/documentType">
+        <Annotation Term="Common.Label" String="Document Type"/>
+      </Annotations>
+      <Annotations Target="self.log/documentRef">
+        <Annotation Term="Common.Label" String="Document Reference"/>
+      </Annotations>
+      <Annotations Target="self.log/status">
+        <Annotation Term="Common.Label" String="Status"/>
+      </Annotations>
+      <Annotations Target="self.log/messageContent">
+        <Annotation Term="Common.Label" String="Message Content"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

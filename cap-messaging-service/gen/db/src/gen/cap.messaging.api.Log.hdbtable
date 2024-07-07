@@ -1,12 +1,14 @@
 COLUMN TABLE cap_messaging_api_Log (
   ID NVARCHAR(36) NOT NULL,
   createdAt TIMESTAMP,
-  createdBy NVARCHAR(50),
+  createdBy NVARCHAR(255),
   modifiedAt TIMESTAMP,
   modifiedBy NVARCHAR(255),
-  sender NVARCHAR(50),
+  vendor NVARCHAR(60) NOT NULL,
+  msgType NVARCHAR(4) NOT NULL,
+  documentType NVARCHAR(20) NOT NULL,
+  documentRef NVARCHAR(100) NOT NULL,
   status NVARCHAR(30),
-  messageContent NVARCHAR(200),
-  statusText NVARCHAR(50),
-  PRIMARY KEY(ID)
+  messageContent NCLOB,
+  PRIMARY KEY(ID, vendor, msgType, documentType, documentRef)
 )

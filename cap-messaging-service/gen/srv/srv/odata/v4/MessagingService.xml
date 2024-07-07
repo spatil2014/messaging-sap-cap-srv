@@ -16,9 +16,6 @@
         <EntitySet Name="recipient" EntityType="MessagingService.recipient">
           <NavigationPropertyBinding Path="message" Target="messages"/>
         </EntitySet>
-        <EntitySet Name="configuration" EntityType="MessagingService.configuration"/>
-        <EntitySet Name="log" EntityType="MessagingService.log"/>
-        <EntitySet Name="templates" EntityType="MessagingService.templates"/>
         <ActionImport Name="sendWhatsAppMessage" Action="MessagingService.sendWhatsAppMessage"/>
         <ActionImport Name="sendSMS" Action="MessagingService.sendSMS"/>
         <ActionImport Name="messagingAction" Action="MessagingService.messagingAction"/>
@@ -57,44 +54,6 @@
         <Property Name="contact" Type="Edm.String"/>
         <Property Name="email" Type="Edm.String"/>
         <Property Name="status" Type="Edm.String"/>
-      </EntityType>
-      <EntityType Name="configuration">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-        <Property Name="apihost" Type="Edm.String" MaxLength="200"/>
-        <Property Name="port" Type="Edm.Int16"/>
-        <Property Name="username" Type="Edm.String" MaxLength="50"/>
-        <Property Name="password" Type="Edm.String" MaxLength="30"/>
-        <Property Name="type" Type="Edm.String" MaxLength="30"/>
-        <Property Name="sender" Type="Edm.String" MaxLength="50"/>
-        <Property Name="client" Type="Edm.String" MaxLength="50"/>
-      </EntityType>
-      <EntityType Name="log">
-        <Key>
-          <PropertyRef Name="ID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="createdBy" Type="Edm.String" MaxLength="50"/>
-        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
-        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
-        <Property Name="sender" Type="Edm.String" MaxLength="50"/>
-        <Property Name="status" Type="Edm.String" MaxLength="30"/>
-        <Property Name="messageContent" Type="Edm.String" MaxLength="200"/>
-        <Property Name="statusText" Type="Edm.String" MaxLength="50"/>
-      </EntityType>
-      <EntityType Name="templates">
-        <Key>
-          <PropertyRef Name="ID"/>
-          <PropertyRef Name="templateID"/>
-        </Key>
-        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
-        <Property Name="templateID" Type="Edm.String" MaxLength="50" Nullable="false"/>
-        <Property Name="documentType" Type="Edm.String" MaxLength="50"/>
-        <Property Name="sender" Type="Edm.String" MaxLength="50"/>
-        <Property Name="content" Type="Edm.String" MaxLength="200"/>
       </EntityType>
       <Action Name="sendWhatsAppMessage" IsBound="false">
         <Parameter Name="recipient" Type="Edm.String"/>
@@ -191,32 +150,6 @@
         </Annotation>
       </Annotations>
       <Annotations Target="MessagingService.recipient/ID">
-        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
-      </Annotations>
-      <Annotations Target="MessagingService.configuration/ID">
-        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
-      </Annotations>
-      <Annotations Target="MessagingService.log/ID">
-        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
-      </Annotations>
-      <Annotations Target="MessagingService.log/createdAt">
-        <Annotation Term="Core.Computed" Bool="true"/>
-      </Annotations>
-      <Annotations Target="MessagingService.log/createdBy">
-        <Annotation Term="Core.Computed" Bool="true"/>
-      </Annotations>
-      <Annotations Target="MessagingService.log/modifiedAt">
-        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
-      </Annotations>
-      <Annotations Target="MessagingService.log/modifiedBy">
-        <Annotation Term="UI.HiddenFilter" Bool="true"/>
-        <Annotation Term="Core.Computed" Bool="true"/>
-        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
-        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
-      </Annotations>
-      <Annotations Target="MessagingService.templates/ID">
         <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
       </Annotations>
     </Schema>

@@ -1,13 +1,34 @@
 using cap.messaging.api as messaging from '../db/schema';
 
+// ################################################### service 1 Start #####################################################################
+service msgMasterData @(path: '/msgmstdata'){
+
+@odata.draft.enabled
+entity configuration as projection on messaging.Configuration;
+
+@odata.draft.enabled
+entity templates as projection on messaging.Templates;
+
+}
+// ################################################### service 1 End #####################################################################
+
+// ################################################### service 2 Start #####################################################################
+
+service msgTransactionData @(path: '/msgtxndata'){
+
+@readonly
+entity log as projection on messaging.Log;
+
+}
+
+// ################################################### service 2 End #####################################################################
+
+// ################################################### service 3 Start #####################################################################
 service MessagingService @(path: '/communication') {
 
 // @odata.draft.enabled
 entity messages as projection on messaging.Messages;
 entity recipient as projection on messaging.Recipient;
-entity configuration as projection on messaging.Configuration;
-entity log as projection on messaging.Log;
-entity templates as projection on messaging.Templates;
 
   /**
    * Send a message via WhatsApp.
@@ -51,7 +72,12 @@ entity templates as projection on messaging.Templates;
   action messagingAction(recipients: array of String, subject: String, content: String, document_no: String, attachment: String, channel: String, isSignRequired: Boolean, placeholders: array of String) returns Boolean;
   
   // action sendEmail(body: body) returns Boolean;
-  
+}
 
+// ################################################### service 3 End #####################################################################
+
+// ################################################### Internal Consumption service  #####################################################################
+service self @(path: '/msgself'){
+    entity log as projection on messaging.Log;
 }
 

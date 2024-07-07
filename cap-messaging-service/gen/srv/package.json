@@ -13,13 +13,22 @@
     "watch-gallantmessagingcontact": "cds watch --open gallantmessagingcontact/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-configmessageingsrv": "cds watch --open configmessageingsrv/webapp/index.html?sap-ui-xx-viewCache=false",
     "watch-messagingconfigdata": "cds watch --open messagingconfigdata/webapp/index.html?sap-ui-xx-viewCache=false",
-    "watch-contactsmaintenance": "cds watch --open contactsmaintenance/webapp/index.html?sap-ui-xx-viewCache=false"
+    "watch-contactsmaintenance": "cds watch --open contactsmaintenance/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-config-app": "cds watch --open config-app/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-template-app": "cds watch --open template-app/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-log-report": "cds watch --open log-report/webapp/index.html?sap-ui-xx-viewCache=false"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "cds": {
     "requires": {
+      "db": {
+        "kind": "hana"
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      },
       "auth": {
         "kind": "basic",
         "users": {
@@ -42,7 +51,7 @@
   "devDependencies": {
     "@cap-js/sqlite": "^1",
     "@sap/cds-dk": "^7",
-    "@sap/ux-specification": "UI5-1.124",
+    "@sap/ux-specification": "^1.120.14",
     "rimraf": "^5.0.5"
   },
   "sapux": [
@@ -51,6 +60,9 @@
     "app/gallantmessagingcontact",
     "app/configmessageingsrv",
     "app/messagingconfigdata",
-    "app/contactsmaintenance"
+    "app/contactsmaintenance",
+    "app/config-app",
+    "app/template-app",
+    "app/log-report"
   ]
 }

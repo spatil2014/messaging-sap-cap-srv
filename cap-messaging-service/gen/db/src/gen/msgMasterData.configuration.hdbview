@@ -1,0 +1,15 @@
+VIEW msgMasterData_configuration AS SELECT
+  Configuration_0.createdAt,
+  Configuration_0.createdBy,
+  Configuration_0.modifiedAt,
+  Configuration_0.modifiedBy,
+  Configuration_0.vendor,
+  Configuration_0.msgType,
+  Configuration_0.apihost,
+  Configuration_0.port,
+  Configuration_0.username,
+  Configuration_0.password,
+  Configuration_0.sender,
+  Configuration_0.documentType,
+  Configuration_0.active
+FROM cap_messaging_api_Configuration AS Configuration_0

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="msgMasterData" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="configuration" EntityType="msgMasterData.configuration">
+          <NavigationPropertyBinding Path="SiblingEntity" Target="configuration"/>
+        </EntitySet>
+        <EntitySet Name="templates" EntityType="msgMasterData.templates">
+          <NavigationPropertyBinding Path="SiblingEntity" Target="templates"/>
+        </EntitySet>
+      </EntityContainer>
+      <EntityType Name="configuration">
+        <Key>
+          <PropertyRef Name="vendor"/>
+          <PropertyRef Name="msgType"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="vendor" Type="Edm.String" MaxLength="60" Nullable="false"/>
+        <Property Name="msgType" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="apihost" Type="Edm.String" MaxLength="200"/>
+        <Property Name="port" Type="Edm.Int16"/>
+        <Property Name="username" Type="Edm.String" MaxLength="50"/>
+        <Property Name="password" Type="Edm.String" MaxLength="30"/>
+        <Property Name="sender" Type="Edm.String" MaxLength="50"/>
+        <Property Name="documentType" Type="Edm.String" MaxLength="20"/>
+        <Property Name="active" Type="Edm.Boolean" DefaultValue="true"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="msgMasterData.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="msgMasterData.configuration"/>
+      </EntityType>
+      <EntityType Name="templates">
+        <Key>
+          <PropertyRef Name="vendor"/>
+          <PropertyRef Name="documentType"/>
+          <PropertyRef Name="msgType"/>
+          <PropertyRef Name="IsActiveEntity"/>
+        </Key>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="vendor" Type="Edm.String" MaxLength="60" Nullable="false"/>
+        <Property Name="documentType" Type="Edm.String" MaxLength="20" Nullable="false"/>
+        <Property Name="msgType" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="templateID" Type="Edm.String" MaxLength="50"/>
+        <Property Name="content" Type="Edm.String" MaxLength="200"/>
+        <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
+        <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <NavigationProperty Name="DraftAdministrativeData" Type="msgMasterData.DraftAdministrativeData" ContainsTarget="true"/>
+        <NavigationProperty Name="SiblingEntity" Type="msgMasterData.templates"/>
+      </EntityType>
+      <EntityType Name="DraftAdministrativeData">
+        <Key>
+          <PropertyRef Name="DraftUUID"/>
+        </Key>
+        <Property Name="DraftUUID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="CreationDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="CreatedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsCreatedByMe" Type="Edm.Boolean"/>
+        <Property Name="LastChangeDateTime" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="LastChangedByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="InProcessByUser" Type="Edm.String" MaxLength="256"/>
+        <Property Name="DraftIsProcessedByMe" Type="Edm.Boolean"/>
+      </EntityType>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.configuration"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="msgMasterData.configuration"/>
+      </Action>
+      <Action Name="draftPrepare" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.templates"/>
+        <Parameter Name="SideEffectsQualifier" Type="Edm.String"/>
+        <ReturnType Type="msgMasterData.templates"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.configuration"/>
+        <ReturnType Type="msgMasterData.configuration"/>
+      </Action>
+      <Action Name="draftActivate" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.templates"/>
+        <ReturnType Type="msgMasterData.templates"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.configuration"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="msgMasterData.configuration"/>
+      </Action>
+      <Action Name="draftEdit" IsBound="true" EntitySetPath="in">
+        <Parameter Name="in" Type="msgMasterData.templates"/>
+        <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
+        <ReturnType Type="msgMasterData.templates"/>
+      </Action>
+      <Annotations Target="msgMasterData.EntityContainer/configuration">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="msgMasterData.draftActivate"/>
+            <PropertyValue Property="EditAction" String="msgMasterData.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="msgMasterData.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/vendor">
+        <Annotation Term="Common.Label" String="Vendor"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/msgType">
+        <Annotation Term="Common.Label" String="Message Type"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/apihost">
+        <Annotation Term="Common.Label" String="API Host"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/port">
+        <Annotation Term="Common.Label" String="Port"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/username">
+        <Annotation Term="Common.Label" String="User Name"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/password">
+        <Annotation Term="Common.Label" String="Password"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/sender">
+        <Annotation Term="Common.Label" String="Sender"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/documentType">
+        <Annotation Term="Common.Label" String="Document Type"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/active">
+        <Annotation Term="Common.Label" String="Active Flag"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.configuration/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.EntityContainer/templates">
+        <Annotation Term="Common.DraftRoot">
+          <Record Type="Common.DraftRootType">
+            <PropertyValue Property="ActivationAction" String="msgMasterData.draftActivate"/>
+            <PropertyValue Property="EditAction" String="msgMasterData.draftEdit"/>
+            <PropertyValue Property="PreparationAction" String="msgMasterData.draftPrepare"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/vendor">
+        <Annotation Term="Common.Label" String="Vendor"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/documentType">
+        <Annotation Term="Common.Label" String="Document Type"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/msgType">
+        <Annotation Term="Common.Label" String="Message Type"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/templateID">
+        <Annotation Term="Common.Label" String="Template ID"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/content">
+        <Annotation Term="Common.Label" String="Content"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/IsActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/HasActiveEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/HasDraftEntity">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/DraftAdministrativeData">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData">
+        <Annotation Term="Common.Label" String="{i18n>Draft_DraftAdministrativeData}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/DraftUUID">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>Draft_DraftUUID}"/>
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/CreationDateTime">
+        <Annotation Term="Common.Label" String="{i18n>Draft_CreationDateTime}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/CreatedByUser">
+        <Annotation Term="Common.Label" String="{i18n>Draft_CreatedByUser}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/DraftIsCreatedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsCreatedByMe}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/LastChangeDateTime">
+        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangeDateTime}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/LastChangedByUser">
+        <Annotation Term="Common.Label" String="{i18n>Draft_LastChangedByUser}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/InProcessByUser">
+        <Annotation Term="Common.Label" String="{i18n>Draft_InProcessByUser}"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.DraftAdministrativeData/DraftIsProcessedByMe">
+        <Annotation Term="UI.Hidden" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>Draft_DraftIsProcessedByMe}"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

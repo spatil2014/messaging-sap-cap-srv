@@ -1,11 +1,13 @@
-VIEW MessagingService_log AS SELECT
+VIEW self_log AS SELECT
   Log_0.ID,
   Log_0.createdAt,
   Log_0.createdBy,
   Log_0.modifiedAt,
   Log_0.modifiedBy,
-  Log_0.sender,
+  Log_0.vendor,
+  Log_0.msgType,
+  Log_0.documentType,
+  Log_0.documentRef,
   Log_0.status,
-  Log_0.messageContent,
-  Log_0.statusText
+  Log_0.messageContent
 FROM cap_messaging_api_Log AS Log_0

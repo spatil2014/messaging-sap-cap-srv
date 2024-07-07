@@ -1,0 +1,11 @@
+VIEW msgMasterData_templates AS SELECT
+  Templates_0.createdAt,
+  Templates_0.createdBy,
+  Templates_0.modifiedAt,
+  Templates_0.modifiedBy,
+  Templates_0.vendor,
+  Templates_0.documentType,
+  Templates_0.msgType,
+  Templates_0.templateID,
+  Templates_0.content
+FROM cap_messaging_api_Templates AS Templates_0

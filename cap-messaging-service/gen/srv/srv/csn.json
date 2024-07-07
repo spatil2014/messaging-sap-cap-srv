@@ -1,6 +1,303 @@
 {
   "namespace": "cap.messaging.api",
   "definitions": {
+    "cap.messaging.api.t_vendor": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 60
+    },
+    "cap.messaging.api.t_docType": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 20
+    },
+    "cap.messaging.api.t_msgType": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 4
+    },
+    "cap.messaging.api.Configuration": {
+      "kind": "entity",
+      "includes": [
+        "managed"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
+        },
+        "apihost": {
+          "@title": "API Host",
+          "type": "cds.String",
+          "length": 200
+        },
+        "port": {
+          "@title": "Port",
+          "type": "cds.Int16"
+        },
+        "username": {
+          "@title": "User Name",
+          "type": "cds.String",
+          "length": 50
+        },
+        "password": {
+          "@title": "Password",
+          "type": "cds.String",
+          "length": 30
+        },
+        "sender": {
+          "@title": "Sender",
+          "type": "cds.String",
+          "length": 50
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "active": {
+          "@title": "Active Flag",
+          "type": "cds.Boolean",
+          "default": {
+            "val": true
+          }
+        }
+      }
+    },
+    "cap.messaging.api.Templates": {
+      "kind": "entity",
+      "includes": [
+        "managed"
+      ],
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "key": true,
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
+        },
+        "templateID": {
+          "@title": "Template ID",
+          "type": "cds.String",
+          "length": 50
+        },
+        "content": {
+          "@title": "Content",
+          "type": "cds.String",
+          "length": 200
+        }
+      }
+    },
+    "cap.messaging.api.Log": {
+      "kind": "entity",
+      "includes": [
+        "cuid",
+        "managed"
+      ],
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "key": true,
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "documentRef": {
+          "@title": "Document Reference",
+          "key": true,
+          "type": "cds.String",
+          "length": 100
+        },
+        "status": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 30
+        },
+        "messageContent": {
+          "@title": "Message Content",
+          "type": "cds.LargeString"
+        }
+      }
+    },
     "cap.messaging.api.Messages": {
       "kind": "entity",
       "includes": [
@@ -133,65 +430,43 @@
         }
       }
     },
-    "cap.messaging.api.Configuration": {
-      "kind": "entity",
-      "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.UUID"
-        },
-        "apihost": {
-          "type": "cds.String",
-          "length": 200
-        },
-        "port": {
-          "type": "cds.Int16"
-        },
-        "username": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "password": {
-          "type": "cds.String",
-          "length": 30
-        },
-        "type": {
-          "type": "cds.String",
-          "length": 30
-        },
-        "sender": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "client": {
-          "type": "cds.String",
-          "length": 50
-        }
-      }
+    "msgMasterData": {
+      "@source": "srv/MessagingService.cds",
+      "kind": "service",
+      "@path": "/msgmstdata"
     },
-    "cap.messaging.api.Log": {
+    "msgMasterData.configuration": {
       "kind": "entity",
-      "includes": [
-        "cuid",
-        "managed"
-      ],
+      "@odata.draft.enabled": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Configuration"
+          ]
+        }
+      },
       "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.UUID"
-        },
         "createdAt": {
           "@cds.on.insert": {
             "=": "$now"
           },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
           "type": "cds.Timestamp"
         },
         "createdBy": {
           "@cds.on.insert": {
             "=": "$user"
           },
-          "type": "cds.String",
-          "length": 50
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
         },
         "modifiedAt": {
           "@cds.on.insert": {
@@ -219,50 +494,245 @@
           "type": "User",
           "length": 255
         },
-        "sender": {
-          "type": "cds.String",
-          "length": 50
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
         },
-        "status": {
-          "type": "cds.String",
-          "length": 30
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
         },
-        "messageContent": {
+        "apihost": {
+          "@title": "API Host",
           "type": "cds.String",
           "length": 200
         },
-        "statusText": {
+        "port": {
+          "@title": "Port",
+          "type": "cds.Int16"
+        },
+        "username": {
+          "@title": "User Name",
           "type": "cds.String",
           "length": 50
+        },
+        "password": {
+          "@title": "Password",
+          "type": "cds.String",
+          "length": 30
+        },
+        "sender": {
+          "@title": "Sender",
+          "type": "cds.String",
+          "length": 50
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "active": {
+          "@title": "Active Flag",
+          "type": "cds.Boolean",
+          "default": {
+            "val": true
+          }
         }
       }
     },
-    "cap.messaging.api.Templates": {
+    "msgMasterData.templates": {
       "kind": "entity",
-      "includes": [
-        "cuid"
-      ],
+      "@odata.draft.enabled": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Templates"
+          ]
+        }
+      },
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "key": true,
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
+        },
+        "templateID": {
+          "@title": "Template ID",
+          "type": "cds.String",
+          "length": 50
+        },
+        "content": {
+          "@title": "Content",
+          "type": "cds.String",
+          "length": 200
+        }
+      }
+    },
+    "msgTransactionData": {
+      "@source": "srv/MessagingService.cds",
+      "kind": "service",
+      "@path": "/msgtxndata"
+    },
+    "msgTransactionData.log": {
+      "kind": "entity",
+      "@readonly": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Log"
+          ]
+        }
+      },
       "elements": {
         "ID": {
           "key": true,
           "type": "cds.UUID"
         },
-        "templateID": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
           "key": true,
-          "type": "cds.String",
-          "length": 50
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
         },
         "documentType": {
-          "type": "cds.String",
-          "length": 50
+          "@title": "Document Type",
+          "key": true,
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
         },
-        "sender": {
+        "documentRef": {
+          "@title": "Document Reference",
+          "key": true,
           "type": "cds.String",
-          "length": 50
+          "length": 100
         },
-        "content": {
+        "status": {
+          "@title": "Status",
           "type": "cds.String",
-          "length": 200
+          "length": 30
+        },
+        "messageContent": {
+          "@title": "Message Content",
+          "type": "cds.LargeString"
         }
       }
     },
@@ -458,153 +928,6 @@
         }
       }
     },
-    "MessagingService.configuration": {
-      "kind": "entity",
-      "projection": {
-        "from": {
-          "ref": [
-            "cap.messaging.api.Configuration"
-          ]
-        }
-      },
-      "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.UUID"
-        },
-        "apihost": {
-          "type": "cds.String",
-          "length": 200
-        },
-        "port": {
-          "type": "cds.Int16"
-        },
-        "username": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "password": {
-          "type": "cds.String",
-          "length": 30
-        },
-        "type": {
-          "type": "cds.String",
-          "length": 30
-        },
-        "sender": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "client": {
-          "type": "cds.String",
-          "length": 50
-        }
-      }
-    },
-    "MessagingService.log": {
-      "kind": "entity",
-      "projection": {
-        "from": {
-          "ref": [
-            "cap.messaging.api.Log"
-          ]
-        }
-      },
-      "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.UUID"
-        },
-        "createdAt": {
-          "@cds.on.insert": {
-            "=": "$now"
-          },
-          "type": "cds.Timestamp"
-        },
-        "createdBy": {
-          "@cds.on.insert": {
-            "=": "$user"
-          },
-          "type": "cds.String",
-          "length": 50
-        },
-        "modifiedAt": {
-          "@cds.on.insert": {
-            "=": "$now"
-          },
-          "@cds.on.update": {
-            "=": "$now"
-          },
-          "@UI.HiddenFilter": true,
-          "@title": "{i18n>ChangedAt}",
-          "@readonly": true,
-          "type": "cds.Timestamp"
-        },
-        "modifiedBy": {
-          "@cds.on.insert": {
-            "=": "$user"
-          },
-          "@cds.on.update": {
-            "=": "$user"
-          },
-          "@UI.HiddenFilter": true,
-          "@title": "{i18n>ChangedBy}",
-          "@readonly": true,
-          "@description": "{i18n>UserID.Description}",
-          "type": "User",
-          "length": 255
-        },
-        "sender": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "status": {
-          "type": "cds.String",
-          "length": 30
-        },
-        "messageContent": {
-          "type": "cds.String",
-          "length": 200
-        },
-        "statusText": {
-          "type": "cds.String",
-          "length": 50
-        }
-      }
-    },
-    "MessagingService.templates": {
-      "kind": "entity",
-      "projection": {
-        "from": {
-          "ref": [
-            "cap.messaging.api.Templates"
-          ]
-        }
-      },
-      "elements": {
-        "ID": {
-          "key": true,
-          "type": "cds.UUID"
-        },
-        "templateID": {
-          "key": true,
-          "type": "cds.String",
-          "length": 50
-        },
-        "documentType": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "sender": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "content": {
-          "type": "cds.String",
-          "length": 200
-        }
-      }
-    },
     "MessagingService.sendWhatsAppMessage": {
       "kind": "action",
       "params": {
@@ -670,6 +993,108 @@
       },
       "returns": {
         "type": "cds.Boolean"
+      }
+    },
+    "self": {
+      "@source": "srv/MessagingService.cds",
+      "kind": "service",
+      "@path": "/msgself"
+    },
+    "self.log": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "cap.messaging.api.Log"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "vendor": {
+          "@title": "Vendor",
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
+        },
+        "msgType": {
+          "@title": "Message Type",
+          "key": true,
+          "type": "cap.messaging.api.t_msgType",
+          "length": 4
+        },
+        "documentType": {
+          "@title": "Document Type",
+          "key": true,
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
+        },
+        "documentRef": {
+          "@title": "Document Reference",
+          "key": true,
+          "type": "cds.String",
+          "length": 100
+        },
+        "status": {
+          "@title": "Status",
+          "type": "cds.String",
+          "length": 30
+        },
+        "messageContent": {
+          "@title": "Message Content",
+          "type": "cds.LargeString"
+        }
       }
     },
     "Language": {
@@ -1386,6 +1811,130 @@
   },
   "extensions": [
     {
+      "annotate": "MessagingService.configuration",
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "apihost"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "port"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "username"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "password"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "sender"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "active"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "Configuration Entry",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "apihost"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "port"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "username"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "password"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "sender"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "active"
+          }
+        }
+      ]
+    },
+    {
       "annotate": "MessagingService.messages.recipient",
       "@UI.FieldGroup#RecipientsFieldGroup.$Type": "UI.FieldGroupType",
       "@UI.FieldGroup#RecipientsFieldGroup.Data": [
@@ -1404,6 +1953,165 @@
         {
           "$Type": "UI.DataField",
           "Value": "status"
+        }
+      ]
+    },
+    {
+      "annotate": "MessagingService.templates",
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "templateID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "content"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "Template configuration Details",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "templateID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "content"
+          }
+        }
+      ]
+    },
+    {
+      "annotate": "msgMasterData.log",
+      "@UI.DeleteHidden": true,
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentRef"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "messageContent"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentRef"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status"
+          }
         }
       ]
     }

@@ -2,91 +2,182 @@ _schema-version: "3.1"
 ID: cap-messaging-service
 version: 1.0.0
 modules:
-  - name: cap-messaging-service-srv
-    type: nodejs
-    path: gen/srv
-    requires:
-      - name: cap-messaging-service-auth
-      - name: cap-messaging-service-destination-service
-      - name: cap-messaging-service-db
-    provides:
-      - name: srv-api
-        properties:
-          srv-url: ${default-url}
-    parameters:
-      buildpack: nodejs_buildpack
-    build-parameters:
-      builder: npm
-  - name: cap-messaging-service-app-content
-    type: com.sap.application.content
-    path: .
-    requires:
-      - name: cap-messaging-service-repo-host
-        parameters:
-          content-target: true
-    build-parameters:
-      build-result: resources
-      requires:
-        - artifacts:
-            - messages.zip
-          name: messages
-          target-path: resources/
-  - name: messages
-    type: html5
-    path: app/messages
-    build-parameters:
-      build-result: dist
-      builder: custom
-      commands:
-        - npm install
-        - npm run build:cf
-      supported-platforms:
-        []
-resources:
+- name: cap-messaging-service-srv
+  type: nodejs
+  path: gen/srv
+  requires:
   - name: cap-messaging-service-auth
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        tenant-mode: dedicated
-        xsappname: cap-messaging-service
-      path: ./xs-security.json
-      service: xsuaa
-      service-plan: application
-  - name: cap-messaging-service-repo-host
-    type: org.cloudfoundry.managed-service
-    parameters:
-      service: html5-apps-repo
-      service-name: cap-messaging-service-html5-srv
-      service-plan: app-host
   - name: cap-messaging-service-destination-service
-    type: org.cloudfoundry.managed-service
-    parameters:
-      config:
-        HTML5Runtime_enabled: false
-        init_data:
-          instance:
-            destinations:
-              - Authentication: NoAuthentication
-                Name: ui5
-                ProxyType: Internet
-                Type: HTTP
-                URL: https://ui5.sap.com
-            existing_destinations_policy: update
-        version: 1.0.0
-      service: destination
-      service-name: cap-messaging-service-destination-service
-      service-plan: lite
   - name: cap-messaging-service-db
-    type: com.sap.xs.hdi-container
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: destination-content
+  type: com.sap.application.content
+  requires:
+    - name: cap-messaging-service-auth
+      parameters:
+        service-key:
+          name: SELF_CONSUMPTION_SRV_KEY
+    - name: cap-messaging-service-destination-service
+      parameters:
+        content-target: true
+    - name: srv-api
+  build-parameters:
+    no-source: true
+  parameters:
+    content:
+      instance:
+        existing_destinations_policy: update
+        destinations:
+          - Name: SELF_SRV
+            URL: ~{srv-api/srv-url}
+            Authentication: oAuth2ClientCrednetials
+            TokenServiceInstanceName: cap-messaging-service-auth
+            TokenServiceKeyName: SELF_CONSUMPTION_SRV_KEY
+- name: cap-messaging-service-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: cap-messaging-service-repo-host
     parameters:
-      service: hana
-      service-plan: hdi-shared
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - messages.zip
+      name: messages
+      target-path: resources/
+    - artifacts:
+      - comgallanttmsgconfigapp.zip
+      name: comgallanttmsgconfigapp
+      target-path: resources/
+    - artifacts:
+      - comgallanttmsgtemplateapp.zip
+      name: comgallanttmsgtemplateapp
+      target-path: resources/
+    - artifacts:
+      - comgallanttmsgreportlogreport.zip
+      name: comgallanttmsgreportlogreport
+      target-path: resources/
+- name: messages
+  type: html5
+  path: app/messages
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comgallanttmsgconfigapp
+  type: html5
+  path: app/config-app
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: cap-messaging-service-approuter
+  type: approuter.nodejs
+  path: cap-messaging-service-approuter
+  requires:
+  - name: cap-messaging-service_html_repo_runtime
+  - name: cap-messaging-service-auth
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-api
+      strictSSL: false
+      url: ~{srv-url}
+  - name: cap-messaging-service-destination-service
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: comgallanttmsgtemplateapp
+  type: html5
+  path: app/template-app
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comgallanttmsgreportlogreport
+  type: html5
+  path: app/log-report
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: cap-messaging-service-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: cap-messaging-service
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: cap-messaging-service-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: cap-messaging-service-html5-srv
+    service-plan: app-host
+- name: cap-messaging-service-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: cap-messaging-service-destination-service
+    service-plan: lite
+- name: cap-messaging-service-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: cap-messaging-service_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-    - builder: custom
-      commands:
-        - npm ci
-        - npx cds build --production
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production
