@@ -201,6 +201,11 @@
           "@title": "Content",
           "type": "cds.String",
           "length": 200
+        },
+        "templateOrder": {
+          "@title": "Template Order",
+          "type": "cds.String",
+          "length": 6
         }
       }
     },
@@ -369,6 +374,7 @@
           "type": "cds.Binary"
         },
         "document_no": {
+          "key": true,
           "type": "cds.String"
         },
         "recipients": {
@@ -377,6 +383,7 @@
           }
         },
         "channel": {
+          "key": true,
           "type": "cds.String"
         },
         "isSignRequired": {
@@ -387,46 +394,21 @@
           "items": {
             "type": "cds.String"
           }
-        }
-      }
-    },
-    "cap.messaging.api.Recipient": {
-      "kind": "entity",
-      "elements": {
-        "ID": {
+        },
+        "documentType": {
           "key": true,
-          "type": "cds.UUID"
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
         },
-        "firstName": {
+        "templateOrder": {
+          "key": true,
           "type": "cds.String",
-          "length": 50
+          "length": 6
         },
-        "lastName": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "message": {
-          "type": "cds.Association",
-          "target": "cap.messaging.api.Messages",
-          "keys": [
-            {
-              "ref": [
-                "ID"
-              ]
-            }
-          ]
-        },
-        "channel": {
-          "type": "cds.String"
-        },
-        "contact": {
-          "type": "cds.String"
-        },
-        "email": {
-          "type": "cds.String"
-        },
-        "status": {
-          "type": "cds.String"
+        "vendor": {
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
         }
       }
     },
@@ -438,6 +420,128 @@
     "msgMasterData.configuration": {
       "kind": "entity",
       "@odata.draft.enabled": true,
+      "@path": true,
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "apihost"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "port"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "username"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "password"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "sender"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "active"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "Configuration Entry",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "apihost"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "port"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "username"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "password"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "sender"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "active"
+          }
+        }
+      ],
       "projection": {
         "from": {
           "ref": [
@@ -547,6 +651,79 @@
     "msgMasterData.templates": {
       "kind": "entity",
       "@odata.draft.enabled": true,
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "templateID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "content"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "Template configuration Details",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "templateID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "content"
+          }
+        }
+      ],
       "projection": {
         "from": {
           "ref": [
@@ -630,6 +807,11 @@
           "@title": "Content",
           "type": "cds.String",
           "length": 200
+        },
+        "templateOrder": {
+          "@title": "Template Order",
+          "type": "cds.String",
+          "length": 6
         }
       }
     },
@@ -641,6 +823,86 @@
     "msgTransactionData.log": {
       "kind": "entity",
       "@readonly": true,
+      "@UI.DeleteHidden": true,
+      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentRef"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "messageContent"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "vendor"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentRef"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "documentType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "msgType"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "status"
+          }
+        }
+      ],
       "projection": {
         "from": {
           "ref": [
@@ -736,12 +998,12 @@
         }
       }
     },
-    "MessagingService": {
+    "messagingService": {
       "@source": "srv/MessagingService.cds",
       "kind": "service",
       "@path": "/communication"
     },
-    "MessagingService.messages": {
+    "messagingService.messages": {
       "kind": "entity",
       "@UI.LineItem": [
         {
@@ -842,6 +1104,7 @@
           "type": "cds.Binary"
         },
         "document_no": {
+          "key": true,
           "type": "cds.String"
         },
         "recipients": {
@@ -850,6 +1113,7 @@
           }
         },
         "channel": {
+          "key": true,
           "type": "cds.String"
         },
         "isSignRequired": {
@@ -860,75 +1124,25 @@
           "items": {
             "type": "cds.String"
           }
-        }
-      }
-    },
-    "MessagingService.recipient": {
-      "kind": "entity",
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Value": "channel"
         },
-        {
-          "$Type": "UI.DataField",
-          "Value": "contact"
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": "email"
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": "status"
-        }
-      ],
-      "projection": {
-        "from": {
-          "ref": [
-            "cap.messaging.api.Recipient"
-          ]
-        }
-      },
-      "elements": {
-        "ID": {
+        "documentType": {
           "key": true,
-          "type": "cds.UUID"
+          "type": "cap.messaging.api.t_docType",
+          "length": 20
         },
-        "firstName": {
+        "templateOrder": {
+          "key": true,
           "type": "cds.String",
-          "length": 50
+          "length": 6
         },
-        "lastName": {
-          "type": "cds.String",
-          "length": 50
-        },
-        "message": {
-          "type": "cds.Association",
-          "target": "MessagingService.messages",
-          "keys": [
-            {
-              "ref": [
-                "ID"
-              ]
-            }
-          ]
-        },
-        "channel": {
-          "type": "cds.String"
-        },
-        "contact": {
-          "type": "cds.String"
-        },
-        "email": {
-          "type": "cds.String"
-        },
-        "status": {
-          "type": "cds.String"
+        "vendor": {
+          "key": true,
+          "type": "cap.messaging.api.t_vendor",
+          "length": 60
         }
       }
     },
-    "MessagingService.sendWhatsAppMessage": {
+    "messagingService.sendWhatsAppMessage": {
       "kind": "action",
       "params": {
         "recipient": {
@@ -945,7 +1159,7 @@
         "type": "cds.Boolean"
       }
     },
-    "MessagingService.sendSMS": {
+    "messagingService.sendSMS": {
       "kind": "action",
       "params": {
         "recipient": {
@@ -959,7 +1173,7 @@
         "type": "cds.Boolean"
       }
     },
-    "MessagingService.messagingAction": {
+    "messagingService.messagingAction": {
       "kind": "action",
       "params": {
         "recipients": {
@@ -989,6 +1203,15 @@
           "items": {
             "type": "cds.String"
           }
+        },
+        "documentType": {
+          "type": "cds.String"
+        },
+        "templateOrder": {
+          "type": "cds.String"
+        },
+        "vendor": {
+          "type": "cds.String"
         }
       },
       "returns": {
@@ -1809,313 +2032,6 @@
       }
     }
   },
-  "extensions": [
-    {
-      "annotate": "MessagingService.configuration",
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "apihost"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "port"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "username"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "password"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "sender"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "active"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "Configuration Entry",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "apihost"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "port"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "username"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "password"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "sender"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "active"
-          }
-        }
-      ]
-    },
-    {
-      "annotate": "MessagingService.messages.recipient",
-      "@UI.FieldGroup#RecipientsFieldGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#RecipientsFieldGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Value": "channel"
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": "contact"
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": "email"
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": "status"
-        }
-      ]
-    },
-    {
-      "annotate": "MessagingService.templates",
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "templateID"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "content"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "Template configuration Details",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "templateID"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "content"
-          }
-        }
-      ]
-    },
-    {
-      "annotate": "msgMasterData.log",
-      "@UI.DeleteHidden": true,
-      "@UI.FieldGroup#GeneratedGroup.$Type": "UI.FieldGroupType",
-      "@UI.FieldGroup#GeneratedGroup.Data": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentRef"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "status"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "messageContent"
-          }
-        }
-      ],
-      "@UI.Facets": [
-        {
-          "$Type": "UI.ReferenceFacet",
-          "ID": "GeneratedFacet1",
-          "Label": "General Information",
-          "Target": "@UI.FieldGroup#GeneratedGroup"
-        }
-      ],
-      "@UI.LineItem": [
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "vendor"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentRef"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "documentType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "msgType"
-          }
-        },
-        {
-          "$Type": "UI.DataField",
-          "Value": {
-            "=": "status"
-          }
-        }
-      ]
-    }
-  ],
   "meta": {
     "creator": "CDS Compiler v4.9.2",
     "flavor": "inferred"

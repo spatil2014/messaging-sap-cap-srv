@@ -1,4 +1,4 @@
-VIEW MessagingService_messages AS SELECT
+VIEW messagingService_messages AS SELECT
   Messages_0.createdAt,
   Messages_0.createdBy,
   Messages_0.modifiedAt,
@@ -12,5 +12,8 @@ VIEW MessagingService_messages AS SELECT
   Messages_0.recipients,
   Messages_0.channel,
   Messages_0.isSignRequired,
-  Messages_0.placeholders
+  Messages_0.placeholders,
+  Messages_0.documentType,
+  Messages_0.templateOrder,
+  Messages_0.vendor
 FROM cap_messaging_api_Messages AS Messages_0

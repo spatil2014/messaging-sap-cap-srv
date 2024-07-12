@@ -40,6 +40,7 @@ async function sendEmail() {
     };
     // placeholders = JSON.stringify(jsonObject);
     let isSignRequired = true;
+    let documentType ="invoice", templateOrder="DT1", vendor="gallantt";
     const response = await axios.post('http://localhost:4004/communication/messagingAction', {
       recipients,
     subject,
@@ -47,7 +48,10 @@ async function sendEmail() {
     document_no,
     channel,
     isSignRequired,
-    placeholders
+    placeholders,
+    templateOrder,
+    documentType,
+    vendor
     }, {
       headers: {
         'Content-Type': 'application/json'

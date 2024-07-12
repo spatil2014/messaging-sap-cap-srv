@@ -1,4 +1,4 @@
-using MessagingService as service from '../../srv/MessagingService';
+using messagingService as service from '../../srv/MessagingService';
 // annotate service.messages with @(
 //     UI.FieldGroup #GeneratedGroup : {
 //         $Type : 'UI.FieldGroupType',
@@ -64,12 +64,6 @@ annotate service.messages with @(UI.LineItem: [
     { $Type: 'UI.DataField', Value: 'attachment' }
 ]);
 
-annotate service.recipient with @(UI.LineItem: [
-    { $Type: 'UI.DataField', Value: 'channel' },
-    { $Type: 'UI.DataField', Value: 'contact' },
-    { $Type: 'UI.DataField', Value: 'email' },
-    { $Type: 'UI.DataField', Value: 'status' }
-]);
 
 annotate service.messages with @(
     UI.Facets: [
@@ -82,15 +76,5 @@ annotate service.messages with @(
     ]
 );
 
-
-annotate service.messages.recipient with @(UI.FieldGroup #RecipientsFieldGroup: {
-    $Type: 'UI.FieldGroupType',
-    Data: [
-        { $Type: 'UI.DataField', Value: 'channel' },
-        { $Type: 'UI.DataField', Value: 'contact' },
-        { $Type: 'UI.DataField', Value: 'email' },
-        { $Type: 'UI.DataField', Value: 'status' }
-    ]
-});
 
 

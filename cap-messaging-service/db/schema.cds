@@ -26,6 +26,7 @@ entity Templates : managed {
   key msgType: t_msgType @title : 'Message Type';
   templateID: String(50) @title : 'Template ID';
   content: String(200) @title : 'Content';
+  templateOrder: String(6) @title : 'Template Order'
 }
 
 entity Log : cuid, managed {
@@ -43,24 +44,16 @@ entity Messages: managed {
   subject:String;
   templateID: Integer64;
   attachment: Binary;
-  document_no: String;
+  key document_no: String;
   recipients: many String;
-  channel: String;
+  key channel: String;
   isSignRequired: Boolean;
-  @nullable placeholders: many String;
-  //recipients: Association to many Recipient on recipients.message=$self; 
+  @nullable placeholders: many String;//recipients: Association to many Recipient on recipients.message=$self; 
+  key documentType: t_docType;
+  key templateOrder: String(6);
+  key vendor: t_vendor;
 }
 
-entity Recipient {
-  key ID: UUID;
-  firstName: String(50);
-  lastName: String(50);
-  message: Association to Messages;
-  channel: String; // WhatsApp, SMS, Email, etc.
-  contact: String;
-  email: String;
-  status: String; // Sent, Failed, Pending, etc.
-}
 
 
 

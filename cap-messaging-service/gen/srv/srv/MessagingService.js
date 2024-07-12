@@ -5,7 +5,6 @@ const fs = require('fs');
 const sendEmail = require("./Utils/SendEmail");
 const sendSMS = require("./Utils/SendSMS");
 const express = require('express');
-require('dotenv').config();
 const xsenv = require('@sap/xsenv');
 const cds = require('@sap/cds');
 

@@ -60,6 +60,7 @@
         <Property Name="msgType" Type="Edm.String" MaxLength="4" Nullable="false"/>
         <Property Name="templateID" Type="Edm.String" MaxLength="50"/>
         <Property Name="content" Type="Edm.String" MaxLength="200"/>
+        <Property Name="templateOrder" Type="Edm.String" MaxLength="6"/>
         <Property Name="IsActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="true"/>
         <Property Name="HasActiveEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
         <Property Name="HasDraftEntity" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
@@ -107,6 +108,83 @@
         <Parameter Name="PreserveChanges" Type="Edm.Boolean"/>
         <ReturnType Type="msgMasterData.templates"/>
       </Action>
+      <Annotations Target="msgMasterData.configuration">
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="vendor"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="msgType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="apihost"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="port"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="username"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="password"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="sender"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="active"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GeneratedFacet1"/>
+              <PropertyValue Property="Label" String="Configuration Entry"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="vendor"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="msgType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="apihost"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="port"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="username"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="password"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="sender"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="active"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
       <Annotations Target="msgMasterData.EntityContainer/configuration">
         <Annotation Term="Common.DraftRoot">
           <Record Type="Common.DraftRootType">
@@ -179,6 +257,59 @@
       <Annotations Target="msgMasterData.configuration/DraftAdministrativeData">
         <Annotation Term="UI.Hidden" Bool="true"/>
       </Annotations>
+      <Annotations Target="msgMasterData.templates">
+        <Annotation Term="UI.FieldGroup" Qualifier="GeneratedGroup">
+          <Record Type="UI.FieldGroupType">
+            <PropertyValue Property="Data">
+              <Collection>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="vendor"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="documentType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="msgType"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="templateID"/>
+                </Record>
+                <Record Type="UI.DataField">
+                  <PropertyValue Property="Value" Path="content"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="UI.Facets">
+          <Collection>
+            <Record Type="UI.ReferenceFacet">
+              <PropertyValue Property="ID" String="GeneratedFacet1"/>
+              <PropertyValue Property="Label" String="Template configuration Details"/>
+              <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#GeneratedGroup"/>
+            </Record>
+          </Collection>
+        </Annotation>
+        <Annotation Term="UI.LineItem">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="vendor"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="documentType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="msgType"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="templateID"/>
+            </Record>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="content"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
       <Annotations Target="msgMasterData.EntityContainer/templates">
         <Annotation Term="Common.DraftRoot">
           <Record Type="Common.DraftRootType">
@@ -226,6 +357,9 @@
       </Annotations>
       <Annotations Target="msgMasterData.templates/content">
         <Annotation Term="Common.Label" String="Content"/>
+      </Annotations>
+      <Annotations Target="msgMasterData.templates/templateOrder">
+        <Annotation Term="Common.Label" String="Template Order"/>
       </Annotations>
       <Annotations Target="msgMasterData.templates/IsActiveEntity">
         <Annotation Term="UI.Hidden" Bool="true"/>

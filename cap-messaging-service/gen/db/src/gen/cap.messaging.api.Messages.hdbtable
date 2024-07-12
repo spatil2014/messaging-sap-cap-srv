@@ -8,10 +8,13 @@ COLUMN TABLE cap_messaging_api_Messages (
   subject NVARCHAR(5000),
   templateID BIGINT,
   attachment VARBINARY(5000),
-  document_no NVARCHAR(5000),
+  document_no NVARCHAR(5000) NOT NULL,
   recipients NCLOB,
-  channel NVARCHAR(5000),
+  channel NVARCHAR(5000) NOT NULL,
   isSignRequired BOOLEAN,
   placeholders NCLOB,
-  PRIMARY KEY(ID)
+  documentType NVARCHAR(20) NOT NULL,
+  templateOrder NVARCHAR(6) NOT NULL,
+  vendor NVARCHAR(60) NOT NULL,
+  PRIMARY KEY(ID, document_no, channel, documentType, templateOrder, vendor)
 )

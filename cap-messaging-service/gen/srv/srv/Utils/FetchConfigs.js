@@ -47,7 +47,7 @@ async function fetchEntryById(entityName, id) {
  * @param {string} docType - The docType of the entry to fetch.
  * @returns {Promise<Object|null>} - A promise that resolves to the entity entry or null if not found.
  */
-async function  fetchEntryByDocumentType(entityName, docType) {
+async function  fetchEntryByDocumentType(entityName, docType, templateOrder, vendor, channel) {
   // Ensure the CDS framework is ready
   await cds.connect();
 
@@ -58,7 +58,7 @@ async function  fetchEntryByDocumentType(entityName, docType) {
   }
 
   // Fetch the entry by ID
-  const entry = await cds.run(SELECT.one.from(entity).where({ documentType: docType }));
+  const entry = await cds.run(SELECT.one.from(entity).where({ documentType: docType }).and({ templateOrder: templateOrder }).and({ vendor: vendor }).and({ msgType: channel }));
   return entry;
 }
 

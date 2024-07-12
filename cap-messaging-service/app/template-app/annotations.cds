@@ -1,4 +1,4 @@
-using MessagingService as service from '../../srv/MessagingService';
+using msgMasterData as service from '../../srv/MessagingService';
 annotate service.templates with @(
     UI.FieldGroup #GeneratedGroup : {
         $Type : 'UI.FieldGroupType',

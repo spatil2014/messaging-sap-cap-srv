@@ -1,4 +1,4 @@
-using msgMasterData as service from '../../srv/MessagingService';
+using msgTransactionData as service from '../../srv/MessagingService';
 annotate service.log with @(
     UI.DeleteHidden: true,
     UI.FieldGroup #GeneratedGroup : {

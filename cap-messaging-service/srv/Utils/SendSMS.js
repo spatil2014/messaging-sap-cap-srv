@@ -10,12 +10,17 @@ async function sendSMS(contactNos) {
   const template = "{#var#}{#var#} bill no.{#var#}{#var#}{#var#} MT{#var#}{#var#} MT,{#var#}{#var#} MT, {#var#} {#var#} MT, {#var#}{#var#} MT,={#var#} MT {#var#} P.I.Truck- GALLANTT";
   //"AHEAD ENGINEERS bill no.GILGJ-05093 20MM-550D 34.950 MT,=34.950 MT GJ12BW6910 P.I.Truck-GALLANTT"
   
-  let msg;
+  let msg, templateId;
   msg = contactNos.content;
   if (!contactNos.content) {
     msg = replacePlaceholders(template, contactNos.placeholders);
   }
-  //  let templateDetails = await configs.fetchEntryByDocumentType('Templates', 'Invoice');
+  if(contactNos.subject === 'Bill1') {
+    templateId = '1107171291502855094';
+  } else {
+    templateId = '1207161744874632478';
+  }
+  //  let templateDetails = await configs.fetchEntryByDocumentType('Templates', contactNos.documentType, contactNos.templateOrder, contactNos.vendor, contactNos.channel);
   //configs.fetchEntryById('Configuration','SMS', 'GALL');
   //  let configDetails = await configs.fetchEntryByCommunicationType('Configuration', 'SMS', 'Gallant');
   //configs.fetchEntryById('Templates','Invoice Billing');
@@ -26,7 +31,7 @@ async function sendSMS(contactNos) {
     password: "Gall@2020",
     senderid: "GMLGDM",
     msgType: "text",
-    dltTemplateId: "1107171291502855094",//"34545454541107171291502855094",
+    dltTemplateId: templateId, //"1107171291502855094",//"34545454541107171291502855094",
     duplicatecheck: "true",
     sendMethod: "quick",
     sms: [
